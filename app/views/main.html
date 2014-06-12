@@ -9,11 +9,11 @@
     <tbody>
         <tr>
             <td></td>
-            <td data-ng-repeat="col in range(0, colls)">{{colLetter(col)}}{{row}}</td>
+            <td data-bindonce data-ng-repeat="col in range(0, colls)">{{colLetter(col)}}{{row}}</td>
         </tr>
-        <tr data-ng-repeat="row in range(0, rows)">
+        <tr data-bindonce data-ng-repeat="row in range(0, rows)">
             <td class="row-header" data-ng-if="row > 0">{{row}}</td>
-            <td data-ng-repeat="col in range(0, colls)" data-ng-if="row > 0">{{colLetter(col)}}{{row}}</td>
+            <td data-bindonce data-ng-repeat="col in range(0, colls)" data-ng-if="row > 0">{{colLetter(col)}}{{row}}</td>
         </tr>
     </tbody>
 </table>
