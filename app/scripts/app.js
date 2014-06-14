@@ -5,7 +5,8 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'pasvaz.bindonce'
   ])
   .config(function ($routeProvider) {
     $routeProvider
