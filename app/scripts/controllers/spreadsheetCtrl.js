@@ -2,8 +2,6 @@
 
 angular.module('uSpreadsheetApp')
   .controller('SpreadsheetCtrl', function ($scope) {
-      $scope.colls = 100;
-      $scope.rows = 100;
       $scope.headerUrl = 'views/header.html';
 
       $scope.range = function( from, to )

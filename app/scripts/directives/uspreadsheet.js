@@ -6,7 +6,11 @@ angular.module('uSpreadsheetApp')
             restrict: 'EA',
             controller: 'SpreadsheetCtrl',
             templateUrl: 'views/uSpreadsheet.html',
-            link: function (scope, element, attrs, ctrl) {
+            scope: {
+                cols: '=',
+                rows: '='
+            },
+            link: function ($scope, element, attrs, Ctrl) {
             }
         }
     });
