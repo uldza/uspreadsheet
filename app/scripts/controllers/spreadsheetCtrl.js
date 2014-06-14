@@ -6,6 +6,11 @@ angular.module('uSpreadsheetApp')
 
       $scope.test = "Some test"
       
+      $scope.getValue = function( index )
+      {
+        return index;
+      };
+      
       $scope.range = function( from, to )
       {
         var output = [];
