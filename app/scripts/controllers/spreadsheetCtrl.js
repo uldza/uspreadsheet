@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('uSpreadsheetApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('SpreadsheetCtrl', function ($scope) {
       $scope.colls = 100;
       $scope.rows = 100;
       $scope.headerUrl = 'views/header.html';
