@@ -77,3 +77,8 @@ body {
     border-bottom: 0;
   }
 }
+
+td.active
+{
+    border: 2px solid blue;
+}

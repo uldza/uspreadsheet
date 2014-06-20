@@ -6,14 +6,14 @@ angular.module('uSpreadsheetApp')
             restrict: 'A',
             controller: 'CellCtrl',
             link: function ($scope, element, attrs, Ctrl) {
-                Ctrl.index = $scope.colLetter($scope.col)+$scope.row;
-                Ctrl.value = $scope.getValue(Ctrl.index);
+                var index = $scope.colLetter($scope.col)+$scope.row;
                 
-                element.text(Ctrl.value);
+                Ctrl.init(element, index);
                 
                 element.on('click', function(event) {
                     event.preventDefault();
+                    Ctrl.activate();
                 });
             }
-        }
+        };
     });

@@ -4,12 +4,7 @@ angular.module('uSpreadsheetApp')
   .controller('SpreadsheetCtrl', function ($scope) {
       $scope.headerUrl = 'views/header.html';
 
-      $scope.test = "Some test"
-      
-      $scope.getValue = function( index )
-      {
-        return index;
-      };
+      $scope.test = 'Some test';
       
       $scope.range = function( from, to )
       {
