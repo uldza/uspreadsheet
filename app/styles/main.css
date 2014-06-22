@@ -27,9 +27,8 @@ tr
 {
     height: 17px;
 }
-th
+th.header-shim
 {
-    width: 130px;
     vertical-align: middle;
     font-size: 8pt;
     color: #222;
@@ -38,15 +37,25 @@ th
     border-width: 0 1px 1px 0;
     overflow: hidden;
     padding: 0;
+    min-width: 130px;
 }
-th,
-td.row-header
+th.first
+{
+    border: solid 1px #ccc;
+    border-width: 0 1px 1px 0;
+}
+th.header-shim,
+td.row-header-shim
 {
     background: #f3f3f3;
     text-align: center;
     font-weight: normal;
     vertical-align: middle;
     font-size: 8pt;
+}
+td.row-header-shim
+{
+    min-width: 45px;
 }
 td
 {

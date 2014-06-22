@@ -3,12 +3,12 @@
         <thead>
             <tr>
                 <th class="first"></th>
-                <th data-bindonce data-ng-repeat="col in range(0, cols)">{{colLetter(col)}}</th>
+                <th class="header-shim" data-bindonce data-ng-repeat="col in range(0, cols)">{{colLetter(col)}}</th>
             </tr>
         </thead>
         <tbody>
             <tr data-bindonce data-ng-repeat="row in range(1, rows)">
-                <td class="row-header">{{row}}</td>
+                <td class="row-header-shim">{{row}}</td>
                 <td data-bindonce data-ng-repeat="col in range(0, cols)" data-u-cell></td>
             </tr>
         </tbody>
