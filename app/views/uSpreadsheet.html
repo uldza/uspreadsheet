@@ -1,20 +1,12 @@
 <div class="spreadsheet-container">
-    <div>
-        <div data-ng-include="headerUrl"></div>
-    </div>
-
-    <table>
+    <table cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th colspan={{colls}}>
-                </th>
+                <th class="first"></th>
+                <th data-bindonce data-ng-repeat="col in range(0, cols)">{{colLetter(col)}}</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td data-bindonce data-ng-repeat="col in range(0, cols)">{{colLetter(col)}}</td>
-            </tr>
             <tr data-bindonce data-ng-repeat="row in range(1, rows)">
                 <td class="row-header">{{row}}</td>
                 <td data-bindonce data-ng-repeat="col in range(0, cols)" data-u-cell></td>

@@ -23,7 +23,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <u-spreadsheet cols="100" rows="100"></u-spreadsheet>
+    <u-spreadsheet cols="100" rows="250"></u-spreadsheet>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -49,18 +49,22 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
+    <script src="bower_components/angular-bindonce/bindonce.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <!-- controllers -->
         <script src="scripts/controllers/spreadsheetCtrl.js"></script>
         <script src="scripts/controllers/cellCtrl.js"></script>
         <script src="scripts/controllers/cellInputCtrl.js"></script>
+        <!-- directives -->
         <script src="scripts/directives/uspreadsheet.js"></script>
         <script src="scripts/directives/ucell.js"></script>
         <script src="scripts/directives/cellInput.js"></script>
+        <!-- services -->
         <script src="scripts/services/spreadsheet.js"></script>
         <script src="scripts/services/underscore.js"></script>
         <!-- endbuild -->
