@@ -8,8 +8,6 @@ angular.module('uSpreadsheetApp')
             self.element = element;
             self.index = index;
 
-            //self.setValue(index);
-
             self.element.on('click', function(event) {
                 event.preventDefault();
                 self.activate();

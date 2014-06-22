@@ -20,6 +20,7 @@ angular.module('uSpreadsheetApp')
         };
 
         self.setValue = function( newValue ) {
-            $scope.$apply( $scope.value = newValue );
+            $scope.value = newValue;
+            $scope.$digest();
         };
   });
