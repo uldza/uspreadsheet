@@ -5,6 +5,7 @@ angular.module('uSpreadsheetApp')
         var self = this;
 
         self.activeCtrl = null;
+        self.cellInputCtrl = null;
 
         $document.on('keydown', function(e) {
             console.log(e.keyCode);

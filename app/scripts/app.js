@@ -5,5 +5,6 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'pasvaz.bindonce'
+    'pasvaz.bindonce',
+    'underscore'
   ]);
