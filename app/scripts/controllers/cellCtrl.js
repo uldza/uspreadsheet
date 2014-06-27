@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('uSpreadsheetApp')
-  .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet) {
+  .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet, _) {
         var self = this;
 
         self.init = function(element, index) {
             self.element = element;
-            self.index = index;
+            self.indexes = [];
+            self.indexes.push(index);
 
             self.element.on('click', function(event) {
                 event.preventDefault();
@@ -61,6 +62,30 @@ angular.module('uSpreadsheetApp')
             return self.value;
         };
 
+        self.getAdjacentCells = function() {
+            var cells = {};
+
+            var columns = _.map(self.indexes, function(index) {
+                index = index.match(/[A-Z]+/)[0];
+                return $scope.collNumber(index);
+            }).sort();
+
+            var rows = _.map(self.indexes, function(index) {
+                return index.match(/\d+/)[0] * 1;
+            }).sort();
+
+            var column = columns[0];
+            var row = rows[0];
+
+            cells.up = (rows[0] - 1 > 0) ? $scope.colLetter(column) + (rows[0] - 1) : null;
+            cells.down = (rows[rows.length - 1] + 1 <= $scope.rows) ? $scope.colLetter(column) + (rows[rows.length - 1] + 1) : null;
+
+            cells.left = (columns[0] - 1 >= 0) ? $scope.colLetter(columns[0] - 1) + row : null;
+            cells.right = (columns[columns.length - 1] + 1 <= $scope.cols) ? $scope.colLetter(columns[columns.length - 1] + 1) + row : null;
+
+            return cells;
+        };
+
         self.position = function() {
             var properties = {
                 top: self.element[0].offsetTop,
@@ -73,7 +98,10 @@ angular.module('uSpreadsheetApp')
         };
 
         // Events
-        $rootScope.$on('activate', function(index) {
-            if(index === self.index) { self.activate(); }
+        $rootScope.$on('activatecell', function(e, cellIndex) {
+            if(self.indexes.indexOf(cellIndex) > -1)
+            {
+                self.activate();
+            }
         });
   });

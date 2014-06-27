@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('uSpreadsheetApp')
-    .service('Spreadsheet', function($document){
+    .service('Spreadsheet', function($document, $rootScope){
         var self = this;
 
         self.activeCtrl = null;
@@ -9,28 +9,38 @@ angular.module('uSpreadsheetApp')
         self.cellSelectCtrl = null;
 
         $document.on('keydown', function(e) {
+            if( self.activeCtrl === null )
+            {
+                return;
+            }
+
             console.log(e.keyCode);
             switch(e.keyCode) {
             case 37:
                 e.preventDefault();
+                //left
+                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().left );
                 break;
             case 38:
                 e.preventDefault();
+                //up
+                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().up );
                 break;
             case 39:
                 e.preventDefault();
+                //right
+                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().right );
                 break;
             case 40:
                 e.preventDefault();
+                //down
+                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().down );
                 break;
             case 27:
-                if( self.activeCtrl !== null )
-                {
-                    self.activeCtrl.unfocus();
-                }
+                self.activeCtrl.unfocus();
                 break;
             default:
-                if( self.activeCtrl !== null && !self.activeCtrl.isFocused )
+                if( !self.activeCtrl.isFocused )
                 {
                     self.activeCtrl.focus();
                 }
