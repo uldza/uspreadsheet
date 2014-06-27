@@ -17,20 +17,39 @@ angular.module('uSpreadsheetApp')
         self.activate = function() {
             if(Spreadsheet.activeCtrl !== null)
             {
+                Spreadsheet.activeCtrl.unfocus();
                 Spreadsheet.activeCtrl.deactivate();
             }
 
             self.isActive = true;
+            self.isFocused = false;
+
             self.element.addClass('active');
             Spreadsheet.activeCtrl = this;
             Spreadsheet.cellInputCtrl.setValue(self.value);
-            Spreadsheet.cellInputCtrl.setPosition( self.position() );
+            Spreadsheet.cellSelectCtrl.setPosition( self.position() );
+        };
+
+        self.focus = function() {
+            if(self.isActive)
+            {
+                self.isFocused = true;
+                Spreadsheet.cellInputCtrl.setPosition( self.position() );
+            }
+        };
+
+        self.unfocus = function() {
+            if(self.isFocused)
+            {
+                self.isFocused = false;
+                Spreadsheet.cellInputCtrl.setPosition( {top: '-1000'} );
+                self.setValue(Spreadsheet.cellInputCtrl.getValue());
+            }
         };
 
         self.deactivate = function() {
             self.isActive = false;
             self.element.removeClass('active');
-            self.setValue(Spreadsheet.cellInputCtrl.getValue());
         };
 
         self.setValue = function(value) {
@@ -44,19 +63,17 @@ angular.module('uSpreadsheetApp')
 
         self.position = function() {
             var properties = {
-                top: self.element[0].offsetTop - 1,
-                left: self.element[0].offsetLeft - 2,
-                width: self.element[0].offsetWidth + 3,
-                height: self.element[0].offsetHeight + 2
+                top: self.element[0].offsetTop,
+                left: self.element[0].offsetLeft,
+                width: self.element[0].offsetWidth,
+                height: self.element[0].offsetHeight
             };
 
             return properties;
         };
 
         // Events
-        $rootScope.$on('activate', function(cell) {
-            if(cell === self.cell) { self.activate(); }
+        $rootScope.$on('activate', function(index) {
+            if(index === self.index) { self.activate(); }
         });
-
-        
   });

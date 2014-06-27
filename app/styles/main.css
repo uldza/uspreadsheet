@@ -163,3 +163,14 @@ table.spreadsheet td
     min-width: 114px;
     min-height: 14px;
 }
+.active-cell-border
+{
+  position: absolute;
+  top: -1000px;
+  border: 2px #5292f7 solid;
+  padding: 0 2px;
+  margin: 0;
+  background: transparent;
+  z-index: 5;
+  outline: none;
+}

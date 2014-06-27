@@ -10,17 +10,24 @@ angular.module('uSpreadsheetApp')
         };
 
         self.setPosition = function( position ) {
+            position.top -= 1;
+            position.left -= 2;
+            position.width += 3;
+            position.height += 2;
+
             _.each(position, function( item, key ) {
                 self.element.css(key, item + 'px');
             });
+
+            //self.element.trigger('focus');
         };
 
         self.getValue = function() {
-            return $scope.value;
+            return $scope.data.activeValue;
         };
 
         self.setValue = function( newValue ) {
-            $scope.value = newValue;
+            $scope.data.activeValue = newValue;
             $scope.$digest();
         };
   });
