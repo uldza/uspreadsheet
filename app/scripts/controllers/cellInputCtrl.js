@@ -6,6 +6,7 @@ angular.module('uSpreadsheetApp')
 
         self.init = function(element) {
             self.element = element;
+            self.input = element.find('input');
             Spreadsheet.cellInputCtrl = self;
         };
 
@@ -19,7 +20,7 @@ angular.module('uSpreadsheetApp')
                 self.element.css(key, item + 'px');
             });
 
-            self.element.find('input').triggerHandler('focus');
+            self.input[0].focus();
         };
 
         self.getValue = function() {
