@@ -9,7 +9,20 @@ angular.module('uSpreadsheetApp')
         self.cellSelectCtrl = null;
 
         $document.on('keydown', function(e) {
+            console.log(e.keyCode);
             switch(e.keyCode) {
+            case 37:
+                e.preventDefault();
+                break;
+            case 38:
+                e.preventDefault();
+                break;
+            case 39:
+                e.preventDefault();
+                break;
+            case 40:
+                e.preventDefault();
+                break;
             case 27:
                 if( self.activeCtrl !== null )
                 {
