@@ -9,10 +9,18 @@ angular.module('uSpreadsheetApp')
         self.cellSelectCtrl = null;
 
         $document.on('keydown', function(e) {
-            console.log(e.keyCode);
-            if( self.activeCtrl !== null )
-            {
-                self.activeCtrl.focus();
+            switch(e.keyCode) {
+            case 27:
+                if( self.activeCtrl !== null )
+                {
+                    self.activeCtrl.unfocus();
+                }
+                break;
+            default:
+                if( self.activeCtrl !== null && !self.activeCtrl.isFocused )
+                {
+                    self.activeCtrl.focus();
+                }
             }
         });
 

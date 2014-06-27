@@ -19,7 +19,7 @@ angular.module('uSpreadsheetApp')
                 self.element.css(key, item + 'px');
             });
 
-            //self.element.trigger('focus');
+            self.element.find('input').triggerHandler('focus');
         };
 
         self.getValue = function() {
