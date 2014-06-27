@@ -16,6 +16,34 @@ angular.module('uSpreadsheetApp')
 
             console.log(e.keyCode);
             switch(e.keyCode) {
+            case 8:
+                //backspace
+                if( !self.activeCtrl.isFocused )
+                {
+                    e.preventDefault();
+                    self.activeCtrl.setValue('');
+                    self.cellInputCtrl.setValue('');
+                }
+                break;
+            case 13:
+                //return
+                if( self.activeCtrl.isFocused )
+                {
+                    self.activeCtrl.unfocus();
+                }
+                else
+                {
+                    self.activeCtrl.focus();
+                }
+                break;
+            case 27:
+                //esc
+                if( self.activeCtrl.isFocused )
+                {
+                    self.cellInputCtrl.setValue(self.activeCtrl.oldValue);
+                    self.activeCtrl.unfocus();
+                }
+                break;
             case 37:
                 e.preventDefault();
                 //left
@@ -35,9 +63,6 @@ angular.module('uSpreadsheetApp')
                 e.preventDefault();
                 //down
                 $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().down );
-                break;
-            case 27:
-                self.activeCtrl.unfocus();
                 break;
             default:
                 if( !self.activeCtrl.isFocused )

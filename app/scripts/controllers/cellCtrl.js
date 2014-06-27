@@ -35,6 +35,7 @@ angular.module('uSpreadsheetApp')
             if(self.isActive)
             {
                 self.isFocused = true;
+                self.oldValue = self.getValue();
                 Spreadsheet.cellInputCtrl.setPosition( self.position() );
             }
         };
