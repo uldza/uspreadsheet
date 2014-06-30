@@ -7,5 +7,5 @@ angular
     'ngSanitize',
     'pasvaz.bindonce',
     'uldza.spreadsheet',
-    'underscore',
+    'uldza.underscore',
   ]);
