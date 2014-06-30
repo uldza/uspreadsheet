@@ -127,14 +127,6 @@ angular.module('uldza.spreadsheet.cell')
 
             return properties;
         };
-
-        // Events
-        $rootScope.$on('activatecell', function(e, cellIndex) {
-            if(self.indexes.indexOf(cellIndex) > -1)
-            {
-                self.activate();
-            }
-        });
     })
     .directive('cell', function(){
         return {

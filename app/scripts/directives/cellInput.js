@@ -13,9 +13,9 @@ angular.module('uldza.spreadsheet.cellInput')
         };
 
         self.setPosition = function( position ) {
-            position.top -= 1;
-            position.left -= 2;
-            position.width += 3;
+            position.top    -= 1;
+            position.left   -= 2;
+            position.width  += 3;
             position.height += 2;
 
             _.each(position, function( item, key ) {

@@ -4,9 +4,11 @@ angular.module('uldza.spreadsheet', [
 ]);
 
 angular.module('uldza.spreadsheet')
-    .service('Spreadsheet', function($document, $rootScope, Cell){
+    .service('Spreadsheet', function($document, Cell){
 
         $document.on('keydown', function(e) {
+            var cellIndex, cellCtrl;
+
             if( Cell.activeCtrl === null )
             {
                 return;
@@ -45,22 +47,42 @@ angular.module('uldza.spreadsheet')
             case 37:
                 e.preventDefault();
                 //left
-                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().left );
+                cellIndex = Cell.activeCtrl.getAdjacentCells().left;
+                cellCtrl = Cell.get(cellIndex);
+                if( cellCtrl !== null )
+                {
+                    cellCtrl.activate();
+                }
                 break;
             case 38:
                 e.preventDefault();
                 //up
-                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().up );
+                cellIndex = Cell.activeCtrl.getAdjacentCells().up;
+                cellCtrl = Cell.get(cellIndex);
+                if( cellCtrl !== null )
+                {
+                    cellCtrl.activate();
+                }
                 break;
             case 39:
                 e.preventDefault();
                 //right
-                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().right );
+                cellIndex = Cell.activeCtrl.getAdjacentCells().right;
+                cellCtrl = Cell.get(cellIndex);
+                if( cellCtrl !== null )
+                {
+                    cellCtrl.activate();
+                }
                 break;
             case 40:
                 e.preventDefault();
                 //down
-                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().down );
+                cellIndex = Cell.activeCtrl.getAdjacentCells().down;
+                cellCtrl = Cell.get(cellIndex);
+                if( cellCtrl !== null )
+                {
+                    cellCtrl.activate();
+                }
                 break;
             default:
                 if( !Cell.activeCtrl.isFocused )
