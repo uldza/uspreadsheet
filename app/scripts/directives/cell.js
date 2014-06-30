@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('uSpreadsheetApp')
+angular.module('uldza.spreadsheet.cell', [
+               'uldza.spreadsheet.cellInput',
+               'uldza.spreadsheet.cellSelect'
+]);
+
+angular.module('uldza.spreadsheet.cell')
   .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet, _) {
         var self = this;
 
@@ -105,4 +110,14 @@ angular.module('uSpreadsheetApp')
                 self.activate();
             }
         });
-  });
+    })
+    .directive('cell', function(){
+        return {
+            restrict: 'A',
+            controller: 'CellCtrl',
+            link: function ($scope, element, attrs, Ctrl) {
+                var index = $scope.colLetter($scope.col)+$scope.row;
+                Ctrl.init(element, index);
+            }
+        };
+    });

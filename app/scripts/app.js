@@ -1,10 +1,11 @@
 'use strict';
 
 angular
-  .module('uSpreadsheetApp', [
+  .module('SpreadsheetDemo', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'pasvaz.bindonce',
-    'underscore'
+    'uldza.spreadsheet',
+    'underscore',
   ]);
