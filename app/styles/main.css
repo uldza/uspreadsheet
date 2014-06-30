@@ -81,6 +81,14 @@ table.spreadsheet
     border-spacing: 0;
     cursor: default;
 }
+table.spreadsheet
+{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
 table.spreadsheet tr
 {
     height: 17px;
