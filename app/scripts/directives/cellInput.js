@@ -3,13 +3,13 @@
 angular.module('uldza.spreadsheet.cellInput', []);
 
 angular.module('uldza.spreadsheet.cellInput')
-    .controller('CellInputCtrl', function ($scope, Spreadsheet, _) {
+    .controller('CellInputCtrl', function ($scope, Spreadsheet, _, Cell) {
         var self = this;
 
         self.init = function(element) {
             self.element = element;
             self.input = element.find('input');
-            Spreadsheet.cellInputCtrl = self;
+            Cell.inputCtrl = this;
         };
 
         self.setPosition = function( position ) {

@@ -4,15 +4,10 @@ angular.module('uldza.spreadsheet', [
 ]);
 
 angular.module('uldza.spreadsheet')
-    .service('Spreadsheet', function($document, $rootScope){
-        var self = this;
-
-        self.activeCtrl = null;
-        self.cellInputCtrl = null;
-        self.cellSelectCtrl = null;
+    .service('Spreadsheet', function($document, $rootScope, Cell){
 
         $document.on('keydown', function(e) {
-            if( self.activeCtrl === null )
+            if( Cell.activeCtrl === null )
             {
                 return;
             }
@@ -21,56 +16,56 @@ angular.module('uldza.spreadsheet')
             switch(e.keyCode) {
             case 8:
                 //backspace
-                if( !self.activeCtrl.isFocused )
+                if( !Cell.activeCtrl.isFocused )
                 {
                     e.preventDefault();
-                    self.activeCtrl.setValue('');
-                    self.cellInputCtrl.setValue('');
+                    Cell.activeCtrl.setValue('');
+                    Cell.inputCtrl.setValue('');
                 }
                 break;
             case 13:
                 //return
-                if( self.activeCtrl.isFocused )
+                if( Cell.activeCtrl.isFocused )
                 {
-                    self.activeCtrl.unfocus();
+                    Cell.activeCtrl.unfocus();
                 }
                 else
                 {
-                    self.activeCtrl.focus();
+                    Cell.activeCtrl.focus();
                 }
                 break;
             case 27:
                 //esc
-                if( self.activeCtrl.isFocused )
+                if( Cell.activeCtrl.isFocused )
                 {
-                    self.cellInputCtrl.setValue(self.activeCtrl.oldValue);
-                    self.activeCtrl.unfocus();
+                    Cell.inputCtrl.setValue(Cell.activeCtrl.oldValue);
+                    Cell.activeCtrl.unfocus();
                 }
                 break;
             case 37:
                 e.preventDefault();
                 //left
-                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().left );
+                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().left );
                 break;
             case 38:
                 e.preventDefault();
                 //up
-                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().up );
+                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().up );
                 break;
             case 39:
                 e.preventDefault();
                 //right
-                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().right );
+                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().right );
                 break;
             case 40:
                 e.preventDefault();
                 //down
-                $rootScope.$emit('activatecell', self.activeCtrl.getAdjacentCells().down );
+                $rootScope.$emit('activatecell', Cell.activeCtrl.getAdjacentCells().down );
                 break;
             default:
-                if( !self.activeCtrl.isFocused )
+                if( !Cell.activeCtrl.isFocused )
                 {
-                    self.activeCtrl.focus();
+                    Cell.activeCtrl.focus();
                 }
             }
         });
@@ -86,7 +81,7 @@ angular.module('uldza.spreadsheet')
 
             if( target.hasClass('active-cell-border') )
             {
-                self.activeCtrl.focus();
+                Cell.activeCtrl.focus();
             }
         });
     })

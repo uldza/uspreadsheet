@@ -2,38 +2,63 @@
 
 angular.module('uldza.spreadsheet.cell', [
                'uldza.spreadsheet.cellInput',
-               'uldza.spreadsheet.cellSelect'
+               'uldza.spreadsheet.cellSelection'
 ]);
 
 angular.module('uldza.spreadsheet.cell')
-  .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet, _) {
+    .factory('Cell', function(_) {
+        var Cell = {
+            activeCtrl: null,
+            selectionCtrl: null,
+            inputCtrl: null,
+            collection: {},
+            add: function( cellCtrl ) {
+                _.each(cellCtrl.indexes, function( index ) {
+                    Cell.collection[index] = cellCtrl;
+                });
+            },
+            get: function( index ) {
+                return (Cell.collection[index] === undefined) ? null : Cell.collection[index];
+            },
+        };
+        return Cell;
+    })
+    .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet, _, Cell) {
         var self = this;
+        // Attributes
+        self.element = null;
+        self.isActive = self.isFocused = false;
+        self.indexes = [];
 
+        // Initialization
         self.init = function(element, index) {
             self.element = element;
-            self.indexes = [];
             self.indexes.push(index);
 
+            // Bind click listener
             self.element.on('click', function(event) {
                 event.preventDefault();
                 self.activate();
             });
+
+            // Add cell to all cells list
+            Cell.add(this);
         };
 
         self.activate = function() {
-            if(Spreadsheet.activeCtrl !== null)
+            if(Cell.activeCtrl !== null)
             {
-                Spreadsheet.activeCtrl.unfocus();
-                Spreadsheet.activeCtrl.deactivate();
+                Cell.activeCtrl.unfocus();
+                Cell.activeCtrl.deactivate();
             }
 
             self.isActive = true;
             self.isFocused = false;
 
             self.element.addClass('active');
-            Spreadsheet.activeCtrl = this;
-            Spreadsheet.cellInputCtrl.setValue(self.value);
-            Spreadsheet.cellSelectCtrl.setPosition( self.position() );
+            Cell.activeCtrl = this;
+            Cell.inputCtrl.setValue(self.value);
+            Cell.selectionCtrl.setPosition( self.position() );
         };
 
         self.focus = function() {
@@ -41,7 +66,7 @@ angular.module('uldza.spreadsheet.cell')
             {
                 self.isFocused = true;
                 self.oldValue = self.getValue();
-                Spreadsheet.cellInputCtrl.setPosition( self.position() );
+                Cell.inputCtrl.setPosition( self.position() );
             }
         };
 
@@ -49,8 +74,8 @@ angular.module('uldza.spreadsheet.cell')
             if(self.isFocused)
             {
                 self.isFocused = false;
-                Spreadsheet.cellInputCtrl.setPosition( {top: '-1000'} );
-                self.setValue(Spreadsheet.cellInputCtrl.getValue());
+                Cell.inputCtrl.setPosition( {top: '-1000'} );
+                self.setValue(Cell.inputCtrl.getValue());
             }
         };
 
