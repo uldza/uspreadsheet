@@ -26,7 +26,6 @@ angular.module('uldza.spreadsheet.cellSelection')
         return {
             restrict: 'EA',
             controller: 'CellSelectionCtrl',
-            template: '',
             link: function ($scope, element, attrs, Ctrl) {
                 element.addClass('active-cell-border');
                 Ctrl.init(element);

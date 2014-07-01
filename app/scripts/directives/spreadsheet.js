@@ -1,10 +1,12 @@
 'use strict';
 angular.module('uldza.spreadsheet', [
                'uldza.spreadsheet.cell',
+               'uldza.spreadsheet.areaSelection',
 ]);
 
 angular.module('uldza.spreadsheet')
     .service('Spreadsheet', function($document, Cell){
+        this.mousedown = false;
 
         $document.on('keydown', function(e) {
             var cellIndex, cellCtrl;
@@ -99,47 +101,53 @@ angular.module('uldza.spreadsheet')
         $document.on('dblclick', function(e) {
             e.preventDefault();
 
-            var target = angular.element(e.target);
-
-            if( target.hasClass('active-cell-border') )
+            if( angular.element(e.target).hasClass('active-cell-border') )
             {
                 Cell.activeCtrl.focus();
             }
         });
+
+        $document.on('mousedown', function(e) {
+            this.mousedown = true;
+
+            if(typeof angular.element(e.target).scope === 'function' && angular.element(e.target).scope().$controller !== undefined)
+            {
+                angular.element(e.target).scope().$controller.activate();
+            }
+
+        });
+
+        $document.on('mouseup', function() {
+            this.mousedown = false;
+            if( Cell.selected.length > 0 )
+            {
+                Cell.areaCtrl.fixate();
+            }
+        });
+
+        $document.on('mousemove', function(e) {
+            e.preventDefault();
+            Cell.selected = [];
+
+            if( this.mousedown && 
+                typeof angular.element(e.target).scope === 'function' && 
+                angular.element(e.target).scope().$controller !== undefined
+              )
+            {
+                var index = angular.element(e.target).scope().$controller.indexes[0];
+                Cell.select(index);
+            }
+        });
     })
 
-    .controller('SpreadsheetCtrl', function ($scope) {
+    .controller('SpreadsheetCtrl', function ($scope, Cell) {
         $scope.data = {};
+        $scope.data.activeValue = null;
 
         $scope.data.headerUrl = 'views/header.html';
 
-        $scope.data.activeValue = null;
-
-        $scope.range = function( from, to ) {
-            var output = [];
-            from    = parseInt(from);
-            to      = parseInt(to);
-
-            for (var i=from; i<=to; i++)
-            {
-                output.push(i);
-            }
-
-            return output;
-        };
-
-        $scope.colLetter = function(n) {
-            var s = '';
-            while(n >= 0) {
-                s = String.fromCharCode(n % 26 + 97) + s;
-                n = Math.floor(n / 26) - 1;
-            }
-            return s.toUpperCase();
-        };
-
-        $scope.collNumber = function(col) {
-            return col.charCodeAt(col.length-1) - 65 + 26 * (col.length-1);
-        };
+        $scope.range = Cell.range;
+        $scope.colLetter = Cell.colLetter;
     })
     .directive('uSpreadsheet', function(){
         return {

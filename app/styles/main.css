@@ -182,3 +182,11 @@ table.spreadsheet td
   z-index: 5;
   outline: none;
 }
+.area-selection-box
+{
+  position: absolute;
+  top: -1000px;
+  z-index: 4;
+  background: rgba(160, 195, 255, 0.2);
+}
+

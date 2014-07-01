@@ -9,9 +9,11 @@ angular.module('uldza.spreadsheet.cell')
     .factory('Cell', function(_) {
         var Cell = {
             activeCtrl: null,
+            areaCtrl: null,
             selectionCtrl: null,
             inputCtrl: null,
             collection: {},
+            selected: [],
             add: function( cellCtrl ) {
                 _.each(cellCtrl.indexes, function( index ) {
                     Cell.collection[index] = cellCtrl;
@@ -20,26 +22,83 @@ angular.module('uldza.spreadsheet.cell')
             get: function( index ) {
                 return (Cell.collection[index] === undefined) ? null : Cell.collection[index];
             },
+            select: function( index ) {
+                select( Cell.activeCtrl.indexes[0], index );
+                Cell.areaCtrl.setPosition();
+            },
+            colLetter: function(n) {
+                var s = '';
+                while(n >= 0) {
+                    s = String.fromCharCode(n % 26 + 97) + s;
+                    n = Math.floor(n / 26) - 1;
+                }
+                return s.toUpperCase();
+            },
+            colNumber: function(col) {
+                return col.charCodeAt(col.length-1) - 65 + 26 * (col.length-1);
+            },
+            indexToNum: function( index ) {
+                return { row: index.match(/\d+/)[0] * 1, col: Cell.colNumber( index.match(/[A-Z]+/)[0] ) };
+            },
+            range: function( from, to ) {
+                var output = [];
+                from    = parseInt(from);
+                to      = parseInt(to);
+
+                for (var i=from; i<=to; i++)
+                {
+                    output.push(i);
+                }
+
+                return output;
+            },
         };
+
+        function select( activeIndex, selectedIndex ) {
+            if( activeIndex === selectedIndex )
+            {
+                return;
+            }
+
+            activeIndex = Cell.indexToNum(activeIndex);
+            selectedIndex = Cell.indexToNum(selectedIndex);
+
+            var minRow = Math.min(activeIndex.row, selectedIndex.row);
+            var maxRow = Math.max(activeIndex.row, selectedIndex.row);
+
+            var minCol = Math.min(activeIndex.col, selectedIndex.col);
+            var maxCol = Math.max(activeIndex.col, selectedIndex.col);
+
+            Cell.selected = _.filter(Cell.collection, function(cell) {
+                var index = Cell.indexToNum( cell.indexes[0] );
+                return ( isWithin(minCol, maxCol, index.col) && isWithin(minRow, maxRow, index.row) );
+            });
+        }
+
+        function isWithin(min, max, val) {
+            if(min <= val && val <= max)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         return Cell;
     })
     .controller('CellCtrl', function ($scope, $rootScope, Spreadsheet, _, Cell) {
-        var self = this;
+        var self = $scope.$controller = this;
+
         // Attributes
         self.element = null;
         self.isActive = self.isFocused = false;
         self.indexes = [];
 
         // Initialization
-        self.init = function(element, index) {
-            self.element = element;
+        self.init = function(element, col, row) {
+            var index = Cell.colLetter(col)+row;
             self.indexes.push(index);
-
-            // Bind click listener
-            self.element.on('click', function(event) {
-                event.preventDefault();
-                self.activate();
-            });
+            self.element = element;
 
             // Add cell to all cells list
             Cell.add(this);
@@ -48,6 +107,7 @@ angular.module('uldza.spreadsheet.cell')
         self.activate = function() {
             if(Cell.activeCtrl !== null)
             {
+                Cell.areaCtrl.clear();
                 Cell.activeCtrl.unfocus();
                 Cell.activeCtrl.deactivate();
             }
@@ -97,22 +157,21 @@ angular.module('uldza.spreadsheet.cell')
             var cells = {};
 
             var columns = _.map(self.indexes, function(index) {
-                index = index.match(/[A-Z]+/)[0];
-                return $scope.collNumber(index);
+                return Cell.indexToNum( index ).col;
             }).sort();
 
             var rows = _.map(self.indexes, function(index) {
-                return index.match(/\d+/)[0] * 1;
+                return Cell.indexToNum( index ).row;
             }).sort();
 
             var column = columns[0];
             var row = rows[0];
 
-            cells.up = (rows[0] - 1 > 0) ? $scope.colLetter(column) + (rows[0] - 1) : null;
-            cells.down = (rows[rows.length - 1] + 1 <= $scope.rows) ? $scope.colLetter(column) + (rows[rows.length - 1] + 1) : null;
+            cells.up = (rows[0] - 1 > 0) ? Cell.colLetter(column) + (rows[0] - 1) : null;
+            cells.down = (rows[rows.length - 1] + 1 <= $scope.rows) ? Cell.colLetter(column) + (rows[rows.length - 1] + 1) : null;
 
-            cells.left = (columns[0] - 1 >= 0) ? $scope.colLetter(columns[0] - 1) + row : null;
-            cells.right = (columns[columns.length - 1] + 1 <= $scope.cols) ? $scope.colLetter(columns[columns.length - 1] + 1) + row : null;
+            cells.left = (columns[0] - 1 >= 0) ? Cell.colLetter(columns[0] - 1) + row : null;
+            cells.right = (columns[columns.length - 1] + 1 <= $scope.cols) ? Cell.colLetter(columns[columns.length - 1] + 1) + row : null;
 
             return cells;
         };
@@ -133,8 +192,7 @@ angular.module('uldza.spreadsheet.cell')
             restrict: 'A',
             controller: 'CellCtrl',
             link: function ($scope, element, attrs, Ctrl) {
-                var index = $scope.colLetter($scope.col)+$scope.row;
-                Ctrl.init(element, index);
+                Ctrl.init(element, $scope.col, $scope.row);
             }
         };
     });
