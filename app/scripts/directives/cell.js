@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('uldza.spreadsheet.cell', [
-               'uldza.spreadsheet.cellInput',
-               'uldza.spreadsheet.cellSelection'
+angular.module('um.spreadsheet.cell', [
+               'um.spreadsheet.cellInput',
+               'um.spreadsheet.cellSelection'
 ]);
 
-angular.module('uldza.spreadsheet.cell')
+angular.module('um.spreadsheet.cell')
     .factory('Cell', function(_) {
         var Cell = {
             activeCtrl: null,

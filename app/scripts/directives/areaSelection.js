@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('uldza.spreadsheet.areaSelection', []);
+angular.module('um.spreadsheet.areaSelection', []);
 
-angular.module('uldza.spreadsheet.areaSelection')
+angular.module('um.spreadsheet.areaSelection')
     .controller('AreaSelectionCtrl', function ($scope, Spreadsheet, _, Cell) {
         var self = this;
 

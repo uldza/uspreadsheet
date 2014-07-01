@@ -6,6 +6,6 @@ angular
     'ngResource',
     'ngSanitize',
     'pasvaz.bindonce',
-    'uldza.spreadsheet',
-    'uldza.underscore',
+    'um.spreadsheet',
+    'um.underscore',
   ]);

@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('uldza.spreadsheet.cellInput', []);
+angular.module('um.spreadsheet.cellInput', []);
 
-angular.module('uldza.spreadsheet.cellInput')
+angular.module('um.spreadsheet.cellInput')
     .controller('CellInputCtrl', function ($scope, Spreadsheet, _, Cell) {
         var self = this;
 

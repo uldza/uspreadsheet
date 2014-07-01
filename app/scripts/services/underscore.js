@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('uldza.underscore', [])
+angular.module('um.underscore', [])
     .factory('_', function(){
         return window._;
     });

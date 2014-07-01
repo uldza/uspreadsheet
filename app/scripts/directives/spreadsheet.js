@@ -1,10 +1,10 @@
 'use strict';
-angular.module('uldza.spreadsheet', [
-               'uldza.spreadsheet.cell',
-               'uldza.spreadsheet.areaSelection',
+angular.module('um.spreadsheet', [
+               'um.spreadsheet.cell',
+               'um.spreadsheet.areaSelection',
 ]);
 
-angular.module('uldza.spreadsheet')
+angular.module('um.spreadsheet')
     .service('Spreadsheet', function($document, Cell){
         this.mousedown = false;
 
