@@ -142,6 +142,7 @@ angular.module('uldza.spreadsheet.cell')
         self.deactivate = function() {
             self.isActive = false;
             self.element.removeClass('active');
+            $scope.save(this);
         };
 
         self.setValue = function(value) {

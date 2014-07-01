@@ -148,6 +148,11 @@ angular.module('uldza.spreadsheet')
 
         $scope.range = Cell.range;
         $scope.colLetter = Cell.colLetter;
+
+        $scope.save = function( cellCtrl )
+        {
+            console.log(cellCtrl);
+        };
     })
     .directive('uSpreadsheet', function(){
         return {
@@ -156,7 +161,7 @@ angular.module('uldza.spreadsheet')
             templateUrl: 'templates/spreadsheet.html',
             scope: {
                 cols: '=',
-                rows: '='
+                rows: '=',
             }
         };
     });
