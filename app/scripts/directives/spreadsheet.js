@@ -154,7 +154,7 @@ angular.module('um.spreadsheet')
             console.log(cellCtrl);
         };
     })
-    .directive('uSpreadsheet', function(){
+    .directive('umSpreadsheet', function(){
         return {
             restrict: 'EA',
             controller: 'SpreadsheetCtrl',
