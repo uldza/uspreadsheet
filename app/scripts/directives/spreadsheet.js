@@ -5,6 +5,11 @@ angular.module('um.spreadsheet', [
 ]);
 
 angular.module('um.spreadsheet')
+    .run( function($templateCache) {
+        $templateCache.put('spreadsheet.html', '<div id="toolbar-box"></div><div id="formula-box"><table><tr><td class="fx">Fx</td><td class="formula"><div><input type="text" class="formula-input" data-ng-model="data.activeValue" /></div></td></tr></table></div><div class="spreadsheet-container"><table cellspacing="0" cellpadding="0" class="spreadsheet"><thead><tr><th class="first"></th><th class="header-shim" data-bindonce data-ng-repeat="col in range(0, cols)">{{colLetter(col)}}</th></tr></thead><tbody><tr data-bindonce data-ng-repeat="row in range(1, rows)"><td class="row-header-shim">{{row}}</td><td data-bindonce data-ng-repeat="col in range(0, cols)" data-cell></td></tr></tbody></table><cell-selection></cell-selection><cell-input></cell-input><area-selection></area-selection></div>');
+    });
+
+angular.module('um.spreadsheet')
     .service('Spreadsheet', function($document, Cell){
         this.mousedown = false;
 
@@ -129,8 +134,8 @@ angular.module('um.spreadsheet')
             e.preventDefault();
             Cell.selected = [];
 
-            if( this.mousedown && 
-                typeof angular.element(e.target).scope === 'function' && 
+            if( this.mousedown &&
+                typeof angular.element(e.target).scope === 'function' &&
                 angular.element(e.target).scope().$controller !== undefined
               )
             {
@@ -154,11 +159,11 @@ angular.module('um.spreadsheet')
             console.log(cellCtrl);
         };
     })
-    .directive('umSpreadsheet', function(){
+    .directive('umSpreadsheet', function($templateCache) {
         return {
             restrict: 'EA',
             controller: 'SpreadsheetCtrl',
-            templateUrl: 'templates/spreadsheet.html',
+            template: $templateCache.get('spreadsheet.html'),
             scope: {
                 cols: '=',
                 rows: '=',
