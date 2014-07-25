@@ -187,6 +187,33 @@ angular.module('um.spreadsheet.cell')
 
             return properties;
         };
+
+        self.merge = function() {
+            console.log('merge');
+        };
+
+        self.bold = function() {
+            if( self.element.css('font-weight') !== 'bold' )
+            {
+                self.element.css('font-weight', 'bold');
+            }
+            else
+            {
+                self.element.css('font-weight', 'normal');
+            }
+        };
+
+        self.italic = function() {
+            if( self.element.css('font-style') === 'italic' )
+            {
+                self.element.css('font-style', 'normal');
+            }
+            else
+            {
+                self.element.css('font-style', 'italic');
+            }
+        };
+
     })
     .directive('cell', function(){
         return {
