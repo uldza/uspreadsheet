@@ -139,13 +139,13 @@ angular.module('um.spreadsheet')
 
         $document.on('mousemove', function(e) {
             e.preventDefault();
-            Cell.selected = [];
 
             if( this.mousedown &&
                 typeof angular.element(e.target).scope === 'function' &&
                 angular.element(e.target).scope().$controller !== undefined
               )
             {
+                Cell.selected = [];
                 var index = angular.element(e.target).scope().$controller.indexes[0];
                 Cell.select(index);
             }

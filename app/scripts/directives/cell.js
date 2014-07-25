@@ -23,7 +23,7 @@ angular.module('um.spreadsheet.cell')
                 return (Cell.collection[index] === undefined) ? null : Cell.collection[index];
             },
             select: function( index ) {
-                select( Cell.activeCtrl.indexes[0], index );
+                Cell.selected = select( Cell.activeCtrl.indexes[0], index );
                 Cell.areaCtrl.setPosition();
             },
             colLetter: function(n) {
@@ -69,7 +69,7 @@ angular.module('um.spreadsheet.cell')
             var minCol = Math.min(activeIndex.col, selectedIndex.col);
             var maxCol = Math.max(activeIndex.col, selectedIndex.col);
 
-            Cell.selected = _.filter(Cell.collection, function(cell) {
+            return _.filter(Cell.collection, function(cell) {
                 var index = Cell.indexToNum( cell.indexes[0] );
                 return ( isWithin(minCol, maxCol, index.col) && isWithin(minRow, maxRow, index.row) );
             });
@@ -189,7 +189,7 @@ angular.module('um.spreadsheet.cell')
         };
 
         self.merge = function() {
-            console.log('merge');
+            console.log(Cell.selected);
         };
 
         self.bold = function() {
